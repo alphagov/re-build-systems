@@ -5,6 +5,26 @@ FROM jenkins/jenkins:lts
 # 50000 = jenkins workers
 EXPOSE 50000 80
 
+# Google authentication details for OAuth2. Pass in these details in environment variables.
+# To obtain new details, visit https://developers.google.com/identity/sign-in/web/sign-in
+# Example: --build-arg=googleAuthClientId=678464777343-lgdtrjro69dnhud030hed3f09cr7mkge.apps.googleusercontent.com
+#          --build-arg=googleAuthClientSecret=xyFcGjEBrEBVYBRxo3n4l5RW
+#          --build-arg=ecsEndpointStaticIP=http://18.130.36.230
+ARG googleAuthClientId
+ARG googleAuthClientSecret
+ARG ecsEndpointStaticIP
+# Old way, using environment variables. Have not removed this code yet since we may want to do it this way
+#  # Example: export GOOGLE_AUTH_CLIENT_ID=678464777343-lgdtrjro69dnhud030hed3f09cr7mkge.apps.googleusercontent.com
+#  #          export GOOGLE_AUTH_CLIENT_SECRET=xyFcGjEBrEBVYBRxo3n4l5RW
+#  #          export ECS_ENDPOINT_STATIC_IP=http://18.130.36.230
+#  ENV GOOGLE_AUTH_CLIENT_ID
+#  ENV GOOGLE_AUTH_CLIENT_SECRET
+#  ENV ECS_ENDPOINT_STATIC_IP
+# For more information on how these plug in to Jenkins, see https://github.com/jenkinsci/google-login-plugin and https://jenkins.io/doc/book/system-administration/security/.
+
+# For use within this Dockerfile, not to be passed in from outside.
+ARG sedPatternReplace = "s/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g"
+
 # set a health check to make sure jenkins is working
 HEALTHCHECK --interval=5s \
             --timeout=5s \
@@ -31,6 +51,12 @@ COPY files/log.properties /var/jenkins_home/log.properties
 
 # disable security
 #COPY config.xml  /usr/share/jenkins/ref/config.xml
+
+# Change config.xml to enable google-login plugin (Google OAuth2 login for Jenkins).
+RUN cp -p $JENKINS_HOME/config.xml $JENKINS_HOME/config.$$.xml
+RUN cat $JENKINS_HOME/config.xml | \
+    sed 's/<securityRealm class="hudson.security.SecurityRealm\$None"\/>/<securityRealm class="org.jenkinsci.plugins.googlelogin.GoogleOAuth2SecurityRealm">\n    <clientId>$(echo $googleAuthClientId | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')<\/clientId>\n    <clientSecret>$(echo googleAuthClientSecret | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g')<\/clientSecret>\n    <domain>$(echo $ecsEndpointStaticIP | sed -e 's/\\/\\\\/g; s/\//\\\//g; s/&/\\\&/g'domain>\n  <\/securityRealm>/g' > $JENKINS_HOME/config_new.xml && \
+    mv $JENKINS_HOME/config_new.xml $JENKINS_HOME/config.xml
 
 # import jobs
 COPY jobs/ /usr/share/jenkins/ref/jobs/

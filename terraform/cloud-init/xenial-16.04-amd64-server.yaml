@@ -187,6 +187,16 @@ apt_sources:
       -----END PGP PUBLIC KEY BLOCK-----
 bootcmd:
   - [ sh, -c, echo "Starting Jenkins2 Master Server" ]
+# Set environment variables for Google OAuth2 logging into Jenkins
+# TODO: Remove the hardcoding of these envt variables! They need to come in from the source machine's environment variables.
+# write_files:
+#     - path: /etc/environment
+#       permissions: 0644
+#       content: |
+#         GOOGLE_AUTH_CLIENT_ID=678464777343-lgdtrjro69dnhud030hed3f09cr7mkge.apps.googleusercontent.com
+#         GOOGLE_AUTH_CLIENT_SECRET=xyFcGjEBrEBVYBRxo3n4l5RW
+#         ECS_ENDPOINT_STATIC_IP=http://18.130.36.230
+# TODO: We should probably restrict access to ps and nsenter to prevent users accessing Google secrets from process information.
 runcmd:
   - [ apt-get, update ]
   - [ apt-get, upgrade ]
@@ -194,5 +204,5 @@ runcmd:
   - [ systemctl, status, docker ]
   - [ mkdir, /docker ]
   - git clone ${gitrepo} /docker
-  - [ docker, build, -t=jenkins/jenkins-re, "/docker/docker" ]
+  - [ docker, build, -t=jenkins/jenkins-re, --build-arg=googleAuthClientId="$GOOGLE_AUTH_CLIENT_ID", --build-arg=googleAuthClientSecret="$GOOGLE_AUTH_CLIENT_SECRET", --build-arg=ecsEndpointStaticIP="$ECS_ENDPOINT_STATIC_IP", "/docker/docker" ]
   - [ docker, run, --name, myjenkins, -d, -p, "80:80", -p, "50000:50000", "jenkins/jenkins-re:latest" ]
