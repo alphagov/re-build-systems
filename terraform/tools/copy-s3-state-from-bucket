@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -ef -o pipefail
+
+AWS_REGION="${AWS_REGION:-eu-west-2}"
+
+function print_help_and_exit() {
+  echo "Copies the tfstate file from an S3 bucket"
+  echo ""
+  echo "$0 -b <bucket name> -e <environment> -p <aws profile>"
+  echo ""
+  echo "<bucket name>      = name of the bucket"
+  echo "<environment>      = prod, staging, test, etc"
+  echo "<aws profile>      = aws profile name from ~/.aws/credentials"
+  exit 1
+}
+
+function check_arguments () {
+  [ "${BUCKETNAME}" ] || print_help_and_exit
+  [ "${ENVIRONMENT}" ] || print_help_and_exit
+  [ "${AWS_PROFILE}" ] || print_help_and_exit
+}
+
+while getopts "b:e:p:" arg; do
+  case $arg in
+    b)
+      BUCKETNAME="${OPTARG}"
+      ;;
+    e)
+      ENVIRONMENT="${OPTARG}"
+      ;;
+    p)
+      AWS_PROFILE="${OPTARG}"
+      ;;
+  esac
+done
+
+check_arguments
+echo "Copying terraform state from bucket tfstate-${BUCKETNAME}-${ENVIRONMENT} in ${AWS_REGION}"
+aws s3 sync --profile "${AWS_PROFILE}" --region "${AWS_REGION}" s3://tfstate-${BUCKETNAME}-${ENVIRONMENT} .
