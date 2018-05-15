@@ -6,9 +6,14 @@ output "jenkins2_eip" {
   value = "${aws_eip.jenkins2_eip.public_ip}"
 }
 
-output "jenkins2_dns_name" {
-  description = "Jenkins2 DNS name - uri of the EC2 instance created"
-  value = ["${module.jenkins2_server.public_dns}"]
+# Commented because this DNS name resolves to the original public IPv4 address of the EC2. We need the public DNS name that resolves to the eip.
+# output "jenkins2_dns_name" {
+#   description = "Jenkins2 DNS name - uri of the EC2 instance created"
+#   value = ["${module.jenkins2_server.public_dns}"]
+# }
+
+output "test" {
+  value = "${module.jenkins2_server.id[0]}"
 }
 
 output "jenkins2_security_group_id" {

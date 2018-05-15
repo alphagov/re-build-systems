@@ -24,6 +24,22 @@ module "jenkins2_server" {
   }
 }
 
+# This is a work-around to get the public DNS name of the eip which is assigned to this EC2 instance. If we output the public_dns directly from
+# the terraform-aws-modules/ec2-instance/aws module then it will be the DNS name that resolves to the original IPv4 address assigned to the EC2, rather than
+# the eip. This may be resolved in Terraform (using an export from aws_eip) in the future at which point this code can be removed (see
+# https://github.com/terraform-providers/terraform-provider-aws/issues/1149).
+resource "null_resource" "get_public_dns_name" {
+  triggers {
+    cluster_instance_ids = "${join(",", module.jenkins2_server.id)}"
+  }
+
+  depends_on = ["module.jenkins2_server"]
+
+  provisioner "local-exec" {
+    command = "echo 'public_dns name = ' && /usr/local/bin/aws ec2 describe-instances --instance-ids ${join(" ", module.jenkins2_server.id)} --query 'Reservations[].Instances[].PublicDnsName'"
+  }
+}
+
 data "aws_ami" "source" {
   most_recent = true
 
