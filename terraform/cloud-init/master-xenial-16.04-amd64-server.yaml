@@ -12,6 +12,7 @@ locale: en_GB.UTF-8
 write_files:
   - content: |
       #!/usr/bin/env bash
+      set -eo pipefail
       echo "Waiting until EBS attachment to instance complete"
       while [ ! -e /dev/xvdf ]; do sleep 1; done
       check_xvdf=$(lsblk /dev/xvdf -no KNAME,FSTYPE|tr -d '[:space:]'|tr a-z A-Z)
