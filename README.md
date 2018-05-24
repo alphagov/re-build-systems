@@ -55,24 +55,16 @@ This will provision a containerized Jenkins instance on AWS.
 1. Decide on an environment name, which will be referred as `[environment-name]` from now on.
 That is usually something like `test`, `staging`, `production` or your name if you are doing development or testing (e.g. `daniele`).
 
-1. Generate an SSH public/private key pair. This is just to bootstrap the provisioning process. 
-
-1. Have a "config directory" for your sensitive data with this structure:
+1. Have a "config directory" for your sensitive data with this structure (e.g. a checked-out repository):
 
     ```
     |-- re-build-system            <-- this repository
-    |-- re-build-system-config     <-- configuration folder
+    |-- configuration-directory
     |   |-- terraform
-    |       |-- keys
+    |       |-- keys               <-- your public keys are in this directory
     |       |-- terraform.tfvars
 
     ```
-    
-    If you are from GDS, you can checkout [this repo](https://github.com/alphagov/re-build-systems-config) as your config folder. 
-
-1. Copy the **public** key you generated in the `re-build-system-config` folder, using this name: `re-build-systems-[environment-name]-ssh-deployer.pub`.
-
-1. Customise the `terraform.tfvars` file.
 
 1. Create S3 bucket to host terraform state file:
 
@@ -99,26 +91,26 @@ That is usually something like `test`, `staging`, `production` or your name if y
     terraform apply -var-file=../../re-build-systems-config/terraform/terraform.tfvars  -var environment=[environment-name]
     ```
 
-      You should see output like this:
-    
-      >null_resource.get_public_dns_name (local-exec): public_dns name =  
-      null_resource.get_public_dns_name (local-exec): [  
-      null_resource.get_public_dns_name (local-exec):     <b>"ec2-11-222-333-444.us-east-1.compute.amazonaws.com"</b>  
-      null_resource.get_public_dns_name (local-exec): ]  
-      null_resource.get_public_dns_name: Creation complete after 1s (ID: 1111111111111111111)  
-      aws_eip.jenkins2_eip: Creation complete after 1s (ID: eipalloc-11111111111111111)  
-    
-      >Apply complete! Resources: 19 added, 0 changed, 0 destroyed.  
-    
-      >Outputs:  
-    
-      >image_id = ami-11111111  
-      jenkins2_eip = <b>11.222.333.444</b>  
-      jenkins2_security_group_id = sg-11111111111111111  
-      jenkins2_vpc_id = vpc-11111111111111111  
-      public_subnets = [  
-          subnet-11111111111111111  
-      ]
+  You should see output like this:
+
+  >null_resource.get_public_dns_name (local-exec): public_dns name =  
+  null_resource.get_public_dns_name (local-exec): [  
+  null_resource.get_public_dns_name (local-exec):     <b>"ec2-11-222-333-444.us-east-1.compute.amazonaws.com"</b>  
+  null_resource.get_public_dns_name (local-exec): ]  
+  null_resource.get_public_dns_name: Creation complete after 1s (ID: 1111111111111111111)  
+  aws_eip.jenkins2_eip: Creation complete after 1s (ID: eipalloc-11111111111111111)  
+
+  >Apply complete! Resources: 19 added, 0 changed, 0 destroyed.  
+
+  >Outputs:  
+
+  >image_id = ami-11111111  
+  jenkins2_eip = <b>11.222.333.444</b>  
+  jenkins2_security_group_id = sg-11111111111111111  
+  jenkins2_vpc_id = vpc-11111111111111111  
+  public_subnets = [  
+      subnet-11111111111111111  
+  ]
 
 1. Use the new Jenkins instance
 
@@ -127,9 +119,10 @@ That is usually something like `test`, `staging`, `production` or your name if y
     * Visit the Jenkins installation at `http://[public_dns_name]` or `http://[jenkins2_eip]`
 
     * SSH into the instance with `ssh -i [path-to-your-private-ssh-key] ubuntu@[jenkins2_eip]`
+        * Contact the `RE Build Tools` team to get the private key.
         * To switch to the root user, run `sudo su -`
 
-### Recommandations
+### Recommendations
 
 This is a list of things you may consider doing next:
 

@@ -17,6 +17,10 @@ USER root
 COPY files/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+# Copy groovy script to set up Github authentication
+COPY files/out/github_oauth_plugin_script.groovy /var/jenkins_home/
+# TODO: Change the directory in the above - unsure where the groovy script needs to be copied (code is work-in-progress).
+
 COPY files/start-jenkins.sh /start-jenkins.sh
 RUN chmod +x /start-jenkins.sh
 

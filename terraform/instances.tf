@@ -78,6 +78,28 @@ data "template_file" "docker-jenkins2-server-template" {
   }
 }
 
+data "template_file" "github_oauth_plugin_script" {
+  count = "${var.github_client_id != "" ? 1 : 0}"
+
+  template = "${file("${var.github_oauth_config_script}")}"
+
+  vars {
+    github_client_id = "${var.github_client_id}"
+    github_client_secret = "${var.github_client_secret}"
+    github_admin_users = "${var.github_admin_users}"
+  }
+}
+
+# Create file which will be copied to docker image by Dockerfile.
+resource "local_file" "github_oauth_plugin_script_rendering" {
+  count = "${var.github_client_id != "" ? 1 : 0}"
+  
+  content  = "${data.template_file.github_oauth_plugin_script.rendered}"
+  filename = "${path.module}/docker/files/out/github_oauth_plugin_script.groovy"
+
+  depends_on = ["data.template_file.github_oauth_plugin_script"]
+}
+
 resource "aws_ebs_volume" "jenkins2_server_storage" {
   availability_zone = "${var.aws_az}"
   size              = "${var.server_persistent_storage_size}"

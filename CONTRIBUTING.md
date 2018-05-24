@@ -8,8 +8,6 @@ After checking out the repository, install these tools.
 
 ### Git secrets
 
-Please install the following two tools in the given order.
-
 We use `git secrets` to prevent secrets from being accidentally committed.
 
 ```

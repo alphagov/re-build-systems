@@ -24,6 +24,36 @@ variable "environment" {
   type        = "string"
 }
 
+variable "jenkins_groovy_config_script" {
+  description = "Location of groovy script to configure plugins on Jenkins. This script will be placed on the master Jenkins instance."
+  type        = "string"
+  default     = "docker/files/dummy_jenkins_config_script.groovy"
+}
+
+variable "github_oauth_config_script" {
+  description = "Location of groovy script to set up Github OAuth2 authentication. This script will be placed on the master Jenkins instance."
+  type        = "string"
+  default     = "docker/files/dummy_jenkins_config_script.groovy"
+}
+
+variable "github_client_id" {
+  description = "Your Github client Id"
+  type        = "string"
+  default     = ""
+}
+
+variable "github_client_secret" {
+  description = "Your Github client secret"
+  type        = "string"
+  default     = ""
+}
+
+variable "github_admin_users" {
+  description = "List of github admin users."
+  type        = "list"
+  default     = []
+}
+
 variable "gitrepo" {
   type = "string"
 }
@@ -33,7 +63,6 @@ variable "hostname_suffix" {
 }
 
 variable "instance_type" {
-  type        = "string"
   description = "This defines the default (aws) instance type."
   type        = "string"
   default     = "t2.small"
