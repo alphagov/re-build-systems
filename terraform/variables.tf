@@ -24,6 +24,36 @@ variable "environment" {
   type        = "string"
 }
 
+variable "jenkins_groovy_config_script" {
+  description = "Location of groovy script to configure plugins on Jenkins. This script will be placed on the master Jenkins instance."
+  type        = "string"
+  default     = "docker/files/dummy_jenkins_config_script.groovy"
+}
+
+variable "github_oauth_config_script" {
+  description = "Location of groovy script to set up Github OAuth2 authentication. This script will be placed on the master Jenkins instance."
+  type        = "string"
+  default     = "docker/files/dummy_jenkins_config_script.groovy"
+}
+
+variable "github_client_id" {
+  description = "Your Github client Id"
+  type        = "string"
+  default     = ""
+}
+
+variable "github_client_secret" {
+  description = "Your Github client secret"
+  type        = "string"
+  default     = ""
+}
+
+variable "github_admin_users" {
+  description = "List of Github admin users."
+  type        = "list"
+  default     = []
+}
+
 variable "gitrepo" {
   type = "string"
 }
@@ -33,25 +63,14 @@ variable "hostname_suffix" {
 }
 
 variable "instance_type" {
-  type        = "string"
   description = "This defines the default (aws) instance type."
   type        = "string"
   default     = "t2.small"
 }
 
-variable "private_subnet" {
-  type    = "string"
-  default = "10.0.1.0/24"
-}
-
 variable "product" {
   description = "The name of the product"
   type        = "string"
-}
-
-variable "public_subnet" {
-  type    = "string"
-  default = "10.0.101.0/24"
 }
 
 variable "server_name" {
@@ -74,22 +93,4 @@ variable "server_root_volume_size" {
 variable "ubuntu_release" {
   description = "Which version of ubuntu to install on Jenkins Server"
   type        = "string"
-}
-
-variable "worker_instance_type" {
-  description = "This defines the default (aws) instance type."
-  type        = "string"
-  default     = "t2.medium"
-}
-
-variable "worker_name" {
-  description = "Name of the jenkins2 worker"
-  type        = "string"
-  default     = "worker"
-}
-
-variable "worker_root_volume_size" {
-  description = "Size of the Jenkins Worker root volume (GB)"
-  type        = "string"
-  default     = "50"
 }
