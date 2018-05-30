@@ -7,6 +7,9 @@ catchtrap() {
   exit 1
 }
 
+# to allow Jenkins to access the docker socket
+chmod 666 /var/run/docker.sock
+
 service nginx start
 su -m jenkins -c /usr/local/bin/jenkins.sh
 

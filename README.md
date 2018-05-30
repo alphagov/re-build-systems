@@ -21,8 +21,9 @@ You need `docker` >= `v18.03.0`
 ```
 cd docker
 docker build -t="jenkins/jenkins-re" .
-docker run --name myjenkins -ti -p 8000:80 -p 50000:50000 jenkins/jenkins-re:latest
+docker run --name myjenkins -v /var/run/docker.sock:/var/run/docker.sock -ti -p 8000:80 -p 50000:50000 jenkins/jenkins-re:latest
 ```
+In the command above, the `-v` argument is optional, but needed if you want to start new docker containers on the host from within the Jenkins container (e.g. containers to run tests or build artifacts).
 
 To access the instance browse to [here](http://localhost:8000)
 
