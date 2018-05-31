@@ -11,6 +11,13 @@ random_seed:
 locale: en_GB.UTF-8
 write_files:
   - content: |
+      GITHUB_CLIENT_ID=${github_client_id}
+      GITHUB_CLIENT_SECRET=${github_client_secret}
+      GITHUB_ADMIN_USERS=${github_admin_users}
+    path: /tmp/gitvars
+    owner: 1000:1000
+    permissions: '0400'
+  - content: |
       #!/usr/bin/env bash
       echo "Waiting until EBS attachment to instance complete"
       while [ ! -e /dev/xvdf ]; do sleep 1; done
@@ -41,8 +48,9 @@ write_files:
       else
         echo "/dev/xvdf Already mounted, skipping"
       fi
-    path: /usr/local/bin/mount-persistent-storage
-    permissions: '0555'
+    path: /tmp/github_oauth_plugin_script.groovy
+    owner: 1000:1000
+    permissions: '0400'
 apt_preserve_sources_list: true
 apt_sources:
  - source: "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable"
@@ -222,9 +230,6 @@ apt_sources:
 bootcmd:
   - [ sh, -c, echo "Starting Jenkins2 Master Server" ]
 runcmd:
-  - echo "append domain-search \"${awsenv}.internal\";" >> /etc/dhcp/dhclient.conf
-  - dhclient -r; dhclient
-  - echo "search ${awsenv}.internal" >> /etc/resolvconf/resolv.conf.d/base
   - [ apt-get, update ]
   - [ apt-get, upgrade ]
   - apt-get install -y docker-ce=${dockerversion}
@@ -233,4 +238,5 @@ runcmd:
   - git clone ${gitrepo} /docker
   - [ docker, build, -t=jenkins/jenkins-re, "/docker/docker" ]
   - /usr/local/bin/mount-persistent-storage
-  - [ docker, run, --name, myjenkins, -d, -p, "80:80", -p, "50000:50000", -v, "/mnt/jenkins-ebs:/var/jenkins_home", "jenkins/jenkins-re:latest" ]
+  - mv /tmp/gitvars /docker/gitvars
+  - [ docker, run, --name, myjenkins, -d, -p, "80:80", -p, "50000:50000", --env-file, "/docker/gitvars", -v, "/mnt/jenkins-ebs:/var/jenkins_home", "jenkins/jenkins-re:latest" ]
