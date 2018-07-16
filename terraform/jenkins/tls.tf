@@ -12,7 +12,7 @@ resource "aws_acm_certificate" "tls_certificate" {
 
 resource "aws_route53_record" "dns_validation" {
   count   = "${length(local.san_domains) + 1}"
-  zone_id = "${data.terraform_remote_state.team_dns.team_zone_id}"
+  zone_id = "${var.route53_team_zone_id}"
   name    = "${lookup(aws_acm_certificate.tls_certificate.domain_validation_options[count.index], "resource_record_name")}"
   type    = "${lookup(aws_acm_certificate.tls_certificate.domain_validation_options[count.index], "resource_record_type")}"
   records = ["${lookup(aws_acm_certificate.tls_certificate.domain_validation_options[count.index], "resource_record_value")}"]
