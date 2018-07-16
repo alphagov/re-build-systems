@@ -14,6 +14,7 @@ output "image_id" {
   value = "${data.aws_ami.source.id}"
 }
 
+# Example is https://jenkins2.modules-test-env.modules-test-team.build.gds-reliability.engineering
 output "jenkins2_url" {
   value = "https://${var.server_name}.${var.environment}.${var.team_name}.${var.hostname_suffix}"
 }

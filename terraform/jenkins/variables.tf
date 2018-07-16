@@ -1,3 +1,10 @@
+# #### DNS preferences (from re-build-systems-dns)
+
+variable route53_team_zone_id {
+  type        = "string"
+  description = "The Route53 zone id, obtained from re-build-systems-dns or elsewhere."
+}
+
 # #### AWS preferences ####
 
 variable "allowed_ips" {
@@ -5,15 +12,18 @@ variable "allowed_ips" {
 }
 
 variable "aws_az" {
-  type = "string"
+  type    = "string"
+  default = "eu-west-2a"
 }
 
 variable "aws_profile" {
-  type = "string"
+  type        = "string"
+  description = "AWS profile name from ~/.aws/credentials"
 }
 
 variable "aws_region" {
-  type = "string"
+  type    = "string"
+  default = "eu-west-2"
 }
 
 variable "instance_type" {
@@ -71,7 +81,8 @@ variable "github_organisations" {
 }
 
 variable "gitrepo" {
-  type = "string"
+  type    = "string"
+  default = "https://github.com/alphagov/re-build-systems.git"
 }
 
 variable "gitrepo_branch" {
@@ -110,6 +121,7 @@ variable "team_name" {
 variable "ubuntu_release" {
   description = "Which version of ubuntu to install on Jenkins Server"
   type        = "string"
+  default     = "xenial-16.04-amd64-server"
 }
 
 variable "worker_instance_type" {
@@ -128,4 +140,13 @@ variable "worker_root_volume_size" {
   description = "Size of the Jenkins Worker root volume (GB)"
   type        = "string"
   default     = "50"
+}
+
+# #### Advanced preferences ####
+
+# Only touch these if you know what you're doing!
+variable "user_data" {
+  description = "Link to cloud init file containing setup information for Jenkins worker server instance. You do not need to set this - it defaults to a sensible value."
+  type        = "string"
+  default     = ""
 }

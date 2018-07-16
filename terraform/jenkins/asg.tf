@@ -24,7 +24,7 @@ locals {
 }
 
 data "template_file" "jenkins2_asg_server_template" {
-  template = "${file("cloud-init/server-asg-${var.ubuntu_release}.yaml")}"
+  template = "${file("${path.module}/cloud-init/server-asg-${var.ubuntu_release}.yaml")}"
 
   depends_on = ["aws_efs_file_system.jenkins2_efs_server"]
 
@@ -85,7 +85,7 @@ resource "aws_autoscaling_group" "asg_jenkins2_server" {
 resource "aws_elb" "elb_jenkins2_server" {
   name = "elb-${var.server_name}-${var.environment}-${var.team_name}"
 
-  security_groups    = ["${module.jenkins2_sg_asg_server_internet_facing.this_security_group_id}", "${module.jenkins2_sg_asg_server_internal.this_security_group_id}"]
+  security_groups = ["${module.jenkins2_sg_asg_server_internet_facing.this_security_group_id}", "${module.jenkins2_sg_asg_server_internal.this_security_group_id}"]
 
   subnets = ["${element(module.jenkins2_vpc.public_subnets,0)}"]
 
@@ -119,7 +119,7 @@ resource "aws_autoscaling_attachment" "asg_attachment_to_elb" {
 }
 
 resource "aws_route53_record" "dns_record_asg" {
-  zone_id = "${data.terraform_remote_state.team_dns.team_zone_id}"
+  zone_id = "${var.route53_team_zone_id}"
   name    = "asg.${var.environment}"
   type    = "A"
 
