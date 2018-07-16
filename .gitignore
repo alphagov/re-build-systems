@@ -1,9 +1,9 @@
 # Terraform
-terraform/.terraform
-terraform/terraform.tfstate*
-terraform/terraform.tfvars
-terraform/terraform.plan
-terraform/keys/*
+**/.terraform
+**/terraform.tfstate*
+**/terraform.tfvars
+**/terraform.plan
+**/keys/*
 
 # Intellij
 .idea/
