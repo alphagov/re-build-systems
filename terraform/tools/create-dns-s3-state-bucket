@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+set -ef -o pipefail
+
+AWS_REGION="${AWS_DEFAULT_REGION:-eu-west-1}"
+
+function print_help_and_exit() {
+  [ "$1" ] && echo "$1"
+  [ "$1" ] && echo ""
+  echo "Creates an S3 bucket to store .tfstate files"
+  echo ""
+  echo "$0 -d <domain name> -p <aws profile> -t <team name>"
+  echo ""
+  echo "<domain name>      = domain name"
+  echo "<aws profile>      = aws profile name from ~/.aws/credentials"
+  echo "<team name>        = name of the team owning the Dockerised Jenkins"
+  echo ""
+  echo "Note that the -d and -t parameters must only contain letters, numbers, dots (.) and dashes (-)."
+  exit 1
+}
+
+function check_arguments () {
+  [ "${DOMAINNAME}" ] || print_help_and_exit "Please specify the -d parameter"
+  [ "${AWS_PROFILE}" ] || print_help_and_exit "Please specify the -p parameter"
+  [ "${TEAMNAME}" ] || print_help_and_exit "Please specify the -t parameter"
+}
+
+while getopts "d:p:t:" arg; do
+  case $arg in
+    d)
+      DOMAINNAME="${OPTARG}"
+      ;;
+    p)
+      AWS_PROFILE="${OPTARG}"
+      ;;
+    t)
+      TEAMNAME="${OPTARG}"
+      ;;
+  esac
+done
+
+check_arguments
+
+[[ "$DOMAINNAME" =~ ^[a-zA-Z0-9.\-]{1,255}$ ]] || print_help_and_exit "The -d parameter must only contain letters, numbers, dots (.) and dashes (-)"
+[[ "$TEAMNAME" =~ ^[a-zA-Z0-9.\-]{1,255}$ ]] || print_help_and_exit "The -t parameter must only contain letters, numbers, dots (.) and dashes (-)"
+
+echo "Creating terraform state bucket tfstate-dns-${TEAMNAME}.${DOMAINNAME} in ${AWS_REGION}"
+aws s3api create-bucket --bucket "tfstate-dns-${TEAMNAME}.${DOMAINNAME}" --region "${AWS_REGION}" --create-bucket-configuration LocationConstraint="${AWS_REGION}" --profile "${AWS_PROFILE}"
+echo "Enabling bucket versioning on tfstate-dns-${TEAMNAME}.${DOMAINNAME} in ${AWS_REGION}"
+aws s3api put-bucket-versioning --bucket "tfstate-dns-${TEAMNAME}.${DOMAINNAME}" --region "${AWS_REGION}" --versioning-configuration Status=Enabled --profile "${AWS_PROFILE}"
