@@ -5,6 +5,12 @@ variable route53_team_zone_id {
   description = "The Route53 zone id, obtained from re-build-systems-dns or elsewhere."
 }
 
+variable "subnet_id" {
+  description = "Id of the subnet (in an existing VPC) into which to place the Jenkins instances. If this is not specified then a new VPC and public subnet will be created."
+  type    = "string"
+  default = ""
+}
+
 # #### AWS preferences ####
 
 variable "allowed_ips" {
@@ -13,7 +19,7 @@ variable "allowed_ips" {
 
 variable "aws_az" {
   type    = "string"
-  default = "eu-west-2a"
+  default = "eu-west-1a"
 }
 
 variable "aws_profile" {
@@ -23,7 +29,7 @@ variable "aws_profile" {
 
 variable "aws_region" {
   type    = "string"
-  default = "eu-west-2"
+  default = "eu-west-1"
 }
 
 variable "instance_type" {
