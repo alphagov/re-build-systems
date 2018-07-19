@@ -1,5 +1,10 @@
 terraform {
   required_version = "= 0.11.7"
+
+  # Uncomment the next 3 lines if you want to use an existing S3 bucket.
+  #  backend "s3" {
+  #    encrypt = true
+  #  }
 }
 
 provider "aws" {
