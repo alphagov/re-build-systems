@@ -3,6 +3,7 @@
 **/terraform.tfstate*
 **/terraform.tfvars
 **/terraform.plan
+**/*plan*
 **/keys/*
 
 # Intellij
