@@ -27,7 +27,6 @@ module "jenkins2_worker" {
 data "template_file" "jenkins2_worker_template" {
   # If user_data is defined then use this, otherwise default to cloud_init file.
   template = "${file(coalesce(var.user_data, "${path.module}/cloud-init/worker-${var.ubuntu_release}.yaml"))}"
-  # template = "${var.user_data != "" ? file("${var.user_data}") : file("${path.module}/cloud-init/worker-${var.ubuntu_release}.yaml")}"
 
   vars {
     awsenv        = "${var.environment}"
