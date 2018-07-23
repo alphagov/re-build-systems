@@ -1,8 +1,8 @@
-# GDS Reliability Engineering DNS module
+# GDS Reliability Engineering Jenkins module
 
 ## What this is
 
-This module is used for provisioning an AWS Route53 primary zone. It is designed for use with the `../jenkins` module for provisioning Jenkins master-slave architecture inside Docker containers.
+This module is for provisioning a Jenkins master-slave architecture inside Docker containers.
 
 _Please note that the current location in this repository is only temporary. This will be migrated to its own repository._
 
