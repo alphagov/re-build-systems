@@ -131,7 +131,7 @@ resource "aws_route53_record" "dns_record_asg" {
 }
 
 resource "aws_route53_record" "dns_record_servername" {
-  zone_id = "${data.terraform_remote_state.team_dns.team_zone_id}"
+  zone_id = "${var.route53_team_zone_id}"
   name    = "${var.server_name}.${var.environment}"
   type    = "A"
 
