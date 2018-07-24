@@ -33,10 +33,6 @@ output "public_subnets" {
   value       = ["${module.jenkins2_vpc.public_subnets}"]
 }
 
-output "team_domain_name" {
-  value = "${data.terraform_remote_state.team_dns.team_domain_name}"
-}
-
 output "team_zone_id" {
-  value = "${data.terraform_remote_state.team_dns.team_zone_id}"
+  value = "${var.route53_team_zone_id}"
 }
