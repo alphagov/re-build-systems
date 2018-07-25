@@ -39,7 +39,7 @@ dockerversion = "18.03.1~ce-0~ubuntu"
 
 gitrepo = "https://github.com/alphagov/re-build-systems.git"
 
-gitrepo_branch = "master"
+gitrepo_branch = "dev-env"
 
 server_instance_type = "t2.small"
 
