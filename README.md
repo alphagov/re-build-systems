@@ -122,6 +122,8 @@ Start by provisioning the DNS for one environment, add other environments later.
 
 ## Provision the main Jenkins infrastructure
 
+*this section is quite long,  if possible we try and break up long lists of steps to make it easier for people. Is there anyway we could break these steps up into seperate parts?*
+
 Once Reliability Engineering has made your URL live, you can provision the main Jenkins infrastructure.
 
 You'll need to choose which environment you want to set up Jenkins for, for example `ci`, `dev` or `staging` which will form part of the Jenkins URL.
