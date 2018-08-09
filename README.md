@@ -30,7 +30,7 @@ Before you start you'll need:
 
 * [AWS Command Line Interface (CLI)] installed on your laptop
 
-## Provision the DNS infrastructure
+## Configure and provision the main Jenkins infrastructure
 
 Provisioning the DNS infrastructure allows you to set up the URLs you will use to access your Jenkins.
 
@@ -47,7 +47,7 @@ Start by provisioning the DNS for one environment, add other environments later.
     aws_access_key_id = [your aws key here]
     aws_secret_access_key = [your aws secret here]
     ```
-### Configure and provision the main Jenkins infrastructure
+### Configure the DNS infrastructure
 
 1. Clone this repository to a location of your choice.
 
