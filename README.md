@@ -38,16 +38,15 @@ You'll need to provision a separate Jenkins for each environment you want to cre
 
 Start by provisioning the DNS for one environment, add other environments later. You'll also need to choose your team name, which will be part of the Jenkins URL.
 
-1. Add your AWS user credentials to `~/.aws/credentials`
+### Configure the DNS infrastructure
 
-    If this file does not exist, you'll need to create it.
+1. Add your AWS user credentials to `~/.aws/credentials` if this file does not exist, you'll need to create it.
 
     ```
     [re-build-systems]
     aws_access_key_id = [your aws key here]
     aws_secret_access_key = [your aws secret here]
-    ```
-### Configure the DNS infrastructure
+    ```  
 
 1. Clone this repository to a location of your choice.
 
@@ -63,9 +62,7 @@ Start by provisioning the DNS for one environment, add other environments later.
     export JENKINS_TEAM_NAME=[your team name as defined in the `terraform.tfvars` file]
     ```
 
-1. Create an [S3 bucket] to hold the Terraform state file.
-
-   Run this command from the `tools` directory:
+1. Create an [S3 bucket] to hold the Terraform state file by running this command from the `tools` directory:
 
     ```
     ./create-dns-s3-state-bucket \
