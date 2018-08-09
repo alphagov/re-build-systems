@@ -103,7 +103,7 @@ Start by provisioning the DNS for one environment, add other environments later.
     terraform apply -var-file=./terraform.tfvars
     ```
 
-1. You'll get an output in your terminal like this:
+2. You'll get an output in your terminal like this:
 
     ```
     Outputs:
