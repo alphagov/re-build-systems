@@ -6,7 +6,7 @@ There are 3 initial steps to set up your Jenkins platform:
 
 1. Provision the DNS infrastructure.
 
-1. Provision the main Jenkins infrastructure.
+1. Configure and provision the main Jenkins infrastructure.
 
 1. Sign into your new Jenkins and try it out.
 
@@ -47,7 +47,7 @@ Start by provisioning the DNS for one environment, add other environments later.
     aws_access_key_id = [your aws key here]
     aws_secret_access_key = [your aws secret here]
     ```
-### Configure the DNS infrastructure
+### Configure and provision the main Jenkins infrastructure
 
 1. Clone this repository to a location of your choice.
 
