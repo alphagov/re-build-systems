@@ -150,6 +150,11 @@ You'll need to choose which environment you want to set up Jenkins for, for exam
 
     If you're using bash, add a space at the start of export `AWS_ACCESS_KEY_ID` and export `AWS_SECRET_ACCESS_KEY` to prevent them from being added to `~/.bash_history`.
 
+1. Transfer ownership of the Github OAuth app
+
+    Skip this step if you are provisioning the platform only for test or development purpose. Otherwise, you should transfer ownership of the app to `alphagov`.
+    To do so, click the "Transfer ownership" button located at the top of the page where you copied the credentials from. Input `alphagov` as organisation.
+
 1. Export the environment and team names set during DNS provisioning
 
 	```
