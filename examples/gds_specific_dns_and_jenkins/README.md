@@ -253,30 +253,30 @@ You'll need to choose which environment you want to set up Jenkins for, for exam
 
 ## Assuming roles in AWS
 
-	To assume a role when provisioning any of the infrastructure in this example (S3 bucket, dns or Jenkins) you need to make some changes to your AWS credentials file.
+To assume a role when provisioning any of the infrastructure in this example (S3 bucket, dns or Jenkins) you need to make some changes to your AWS credentials file.
 
-	You need to ensure that the `[assume_role_name_profile]` block in the following configuration is present in your `~/.aws/credentials` file.
+You need to ensure that the `[assume_role_name_profile]` block in the following configuration is present in your `~/.aws/credentials` file.
 
-	```
-	[default]
-	region=eu-west-1
-	aws_access_key_id = YOUR_AWS_ACCESS_KEY_ID
-	aws_secret_access_key = YOUR_AWS_SECRET_ACCESS_KEY
+```
+[default]
+region=eu-west-1
+aws_access_key_id = YOUR_AWS_ACCESS_KEY_ID
+aws_secret_access_key = YOUR_AWS_SECRET_ACCESS_KEY
 
-	[assume_role_name_profile]
-	role_arn = arn:aws:iam::[your AWS account number]:role/[your_role - the name of the AWS role you're assuming]
-	source_profile = [the AWS account from which you're assuming the role. In this example it will be default]
-	mfa_serial = [same as role_arn, if your AWS account requires multi-factor authentication]
-	```
+[assume_role_name_profile]
+role_arn = arn:aws:iam::[your AWS account number]:role/[your_role - the name of the AWS role you're assuming]
+source_profile = [the AWS account from which you're assuming the role. In this example it will be default]
+mfa_serial = [same as role_arn, if your AWS account requires multi-factor authentication]
+```
 
-	Once this has been done then you should get a prompt like the following when creating an S3 bucket:
+Once this has been done then you should get a prompt like the following when creating an S3 bucket:
 
-	```
-	Creating terraform state bucket tfstate-someone-test in eu-west-1
-	Enter MFA code for arn:aws:iam::111111111111:role/your_role:
-	```
+```
+Creating terraform state bucket tfstate-someone-test in eu-west-1
+Enter MFA code for arn:aws:iam::111111111111:role/your_role:
+```
 
-	You will need to enter an appropriate multi-factor authentication code in the same way as you would when using the AWS console. For more instructions and informations on this, see the [AWS documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html).
+You will need to enter an appropriate multi-factor authentication code in the same way as you would when using the AWS console. For more instructions and informations on this, see the [AWS documentation](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_mfa.html).
 
 ## Next Steps
 
