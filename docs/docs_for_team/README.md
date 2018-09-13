@@ -8,13 +8,32 @@ Documentation is in [the main README of the repo].
 
 You can add jobs, add agent images, install extra plugins or customise the Jenkins configuration.
 
+**Note: ** Please add only plugins you really need, as plugins make upgrading more difficult and may potentially introduce instabilities.
+
 To do that, edit `files >> custom-script.groovy` in the example you are following. There are four sections that you may customise as marked with title comments.
+
+You can also customise the configuration of the EC2 instances by editing the files in the `cloud-init` folder of the example you are following.
+
+**Note: ** There is currently a limit of 16KB for the custom code.
+
+After the changes you need to reprovision Jenkins, as explained in the next section.
+
+## Re-provision Jenkins
+
+There are a few steps needed to load the new customised configuration:
+
+1. SSH into the master EC2 instance, stop the docker container and delete the content of the EFS volume (`rm -rf /mnt/jenkins-efs/*`)
+
+2. Run `terraform apply` as you would normally do to provision the infrastructure
+
+3. Terminate the running master EC2 instance (e.g. using the AWS console) - a new instance will be launched automatically with the updated launch configuration.
+
 
 ## How to set up a job using Jenkinsfile
 
 We have an [example of a project] that can be built using this Jenkins platform - it has a [Jenkinsfile] that can be used as a reference when working through this README.
 
-That project is built by running the `build-sample-java-app` job, which should be in your Jenkins by default.
+That project is built by running the `build-sample-java-app` job, which is included in the examples.
 
 There are a number of steps to set up a job using Jenkinsfile each of which will be explained below:
 
@@ -114,7 +133,7 @@ The link between your Docker image and Jenkins instance can be defined as a new 
 
 ### 4. Specify the Docker Image label in the Jenkinsfile
 
-A line like this should be added to the top of the Jenkinsfile in the project you want to add and must match the labelString above:
+A line like this should be added to the top of the Jenkinsfile in the project you want to add and must match the labelString from the previous step:
 
 ```
 agent {
@@ -128,7 +147,7 @@ The last step is to create a new job that will use the Jenkinsfile of the reposi
 
 If you are writing a new groovy script then it may be useful to test it first using the Jenkins UI. This can be found under `Jenkins >> Manage Jenkins >> Script Console`.
 
-Currently our infrastructure only allows for one groovy file to be loaded to each Jenkins environment. Both the `complete_deployment_of_dns_and_jenkins` and the `gds_specific_dns_and_jenkins` examples have a custom script loaded at initialisation under `files >> custom-script.groovy`. In that file you need to edit the relevant section at the top of the file as marked by title comments. As standard it loads two jobs but more can be added by repeating this block.
+Both the `complete_deployment_of_dns_and_jenkins` and the `gds_specific_dns_and_jenkins` examples have a custom script loaded at initialisation under `files >> custom-script.groovy`. In that file you need to add an entry to the list of existing jobs.
 
 ## Known bugs
 
