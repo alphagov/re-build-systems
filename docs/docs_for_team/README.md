@@ -28,6 +28,8 @@ There are a few steps needed to load the new customised configuration:
 
 3. Terminate the running master EC2 instance (e.g. using the AWS console) - a new instance will be launched automatically with the updated launch configuration.
 
+4. Restart Jenkins using the UI. This is so that the jobs in the `custom-script` will be registered.
+
 
 ## How to set up a job using Jenkinsfile
 
@@ -46,6 +48,8 @@ There are a number of steps to set up a job using Jenkinsfile each of which will
 4. Specify the Docker Image label in the Jenkinsfile
 
 5. Create the Jenkins job
+
+6. Restart Jenkins
 
 ### 1. Build a Docker image for the Jenkins agent
 
@@ -148,6 +152,10 @@ The last step is to create a new job that will use the Jenkinsfile of the reposi
 If you are writing a new groovy script then it may be useful to test it first using the Jenkins UI. This can be found under `Jenkins >> Manage Jenkins >> Script Console`.
 
 Both the `complete_deployment_of_dns_and_jenkins` and the `gds_specific_dns_and_jenkins` examples have a custom script loaded at initialisation under `files >> custom-script.groovy`. In that file you need to add an entry to the list of existing jobs.
+
+### 6. Restart Jenkins
+
+Restart Jenkins using the UI. This is so that jobs are loaded up from the `custom-script.groovy` file.
 
 ## Known bugs
 

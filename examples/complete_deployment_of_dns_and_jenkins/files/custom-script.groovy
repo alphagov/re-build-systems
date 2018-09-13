@@ -186,4 +186,3 @@ registerPlugins(pluginList);
 
 Jenkins jenkins = Jenkins.getInstance()
 jenkins.save()
-jenkins.restart()
