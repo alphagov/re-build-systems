@@ -210,10 +210,10 @@ You'll need to choose which environment you want to set up Jenkins for, for exam
 	| `aws_region` | string | | default aws region | AWS Region to use, eg. eu-west-1 |
 	| `custom_groovy_script` | string | | none | Path to custom groovy script to run at end of Jenkins launch |
 	| `environment` | string | **yes** | none | Environment name (e.g. production, test, ci). This is used to construct the DNS name for your Jenkins instances |
-	| `jenkins_admin_users_github_usernames` | list | | none | List of Jenkins admin users' Github usernames |
-	| `github_client_id` | string | | none | Your Github Auth client ID |
-	| `github_client_secret` | string | | none | Your Github Auth client secret |
-	| `github_organisations` | list | | none | List of Github organisations and teams that users must be a member of to allow HTTPS login to master.  For GDS it is recommended that alphagov AND a team be specified, as a user must be a member of both to gain access |
+	| `jenkins_admin_users_github_usernames` | list | **yes** | none | List of Jenkins admin users' Github usernames |
+	| `github_client_id` | string | **yes** | none | Your Github Auth client ID |
+	| `github_client_secret` | string | **yes** | none | Your Github Auth client secret |
+	| `github_organisations` | list | **yes** | none | List of Github organisations and teams that users must be a member of to allow HTTPS login to master.  For GDS it is recommended that alphagov AND a team be specified, as a user must be a member of both to gain access |
 	| `gitrepo` | string | | https://github.com/alphagov/terraform-aws-re-build-jenkins.git | Git repo that hosts Dockerfile |
 	| `gitrepo_branch` | string | | master | Branch of git repo that hosts Dockerfile |
 	| `hostname_suffix` | string | **yes** | none | Main domain name for new Jenkins instances, eg. example.com |
