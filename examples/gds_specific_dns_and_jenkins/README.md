@@ -185,6 +185,12 @@ You'll need to choose which environment you want to set up Jenkins for, for exam
 	export AWS_DEFAULT_REGION="eu-west-1"
 	```
 
+1. Add custom plugins
+
+	```
+	Add space separated list of plugins to [example-name]/jenkins/files/custom-script.groovy
+	```
+
 1. Create the [S3 bucket] to host the Terraform state file by running this command from the `tools` directory:
 
 	```

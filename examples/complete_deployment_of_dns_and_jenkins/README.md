@@ -108,6 +108,12 @@ Before you start you'll need:
 	export JENKINS_ENV_NAME="dev"
 	```
 
+1. Add custom plugins
+
+	```
+	Add space separated list of plugins to [example-name]/jenkins/files/custom-script.groovy
+	```
+
 1. Create the [S3 bucket] to host the Terraform state file by running this command from the `tools` directory:
 
 	```
