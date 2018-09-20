@@ -16,7 +16,11 @@ Beneath the `build.gds-reliability.engineering` domain, Reliability Engineering 
 
 ### Provide stable builds
 
-Reliability Engineering provides stable builds by upgrading [supported core Jenkins, plugins and their dependencies](link to where versions are pinned).
+Reliability Engineering provides stable builds of the module by regularly upgrading and testing the supported core Jenkins version and a base set of plugins (with their dependencies).  It is your responsibility to regularly update the module and conduct further testing within your specific environment.
+
+* [Jenkins Version](https://github.com/alphagov/terraform-aws-re-build-jenkins/blob/master/versions.tf)
+* [Terraform Module Releases](https://github.com/alphagov/terraform-aws-re-build-jenkins/releases)
+* [Plugin Versions](https://github.com/alphagov/terraform-aws-re-build-jenkins/blob/master/docker/files/plugins.txt)
 
 ### Act on vulnerabilities
 
@@ -38,7 +42,7 @@ You should build your agent Docker images using well-supported, existing images,
 
 ### Third party and unsupported plugins
 
-Your must track all vulnerabilities, upgrades and test new versions of any third party plugins.
+You must track all vulnerabilities, upgrades and test new versions of any third party plugins.
 
 ### Secure the host infrastructure
 
@@ -50,10 +54,11 @@ You must secure your AWS infrastructure. For example:
 * secure developer machines, ask your IT team for guidance
 * manage secrets to [secure the build and deployment pipeline](https://www.ncsc.gov.uk/guidance/secure-build-and-deployment-pipeline)
 * control access to provisioned machines and other AWS services
-* implement protective monitoring, like [logging](https://www.ncsc.gov.uk/guidance/introduction-logging-security-purposes), for security purposes
+* implement protective monitoring and [logging](https://www.ncsc.gov.uk/guidance/introduction-logging-security-purposes), for security purposes
 * using [security hardening for VMs](https://gds-way.cloudapps.digital/standards/operating-systems.html)
+* enable infrastructure monitoring using [AWS CloudWatch](https://aws.amazon.com/cloudwatch/)
 
-You must [transfer ownership](https://github.com/alphagov/re-build-systems/blob/42d04c882c313fde38d03bb7be49c55a64bb6291/examples/gds_specific_dns_and_jenkins/README.md#provision-the-main-jenkins-infrastructure) of the GitHub OAuth app to `alphagov` once you have provisioned Jenkins. This prevents unauthorised access to the build system if the owner of the OAuth app leaves the organisation.
+You must [transfer ownership](https://github.com/alphagov/re-build-systems/blob/master/examples/gds_specific_dns_and_jenkins/README.md#provision-the-main-jenkins-infrastructure) of the GitHub OAuth app to `alphagov` once you have provisioned Jenkins. This prevents unauthorised access to the build system if the owner of the OAuth app leaves the organisation.
 
 ### Additional services and infrastructure
 
