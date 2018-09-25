@@ -105,10 +105,14 @@ Start by provisioning the DNS for one environment, add other environments later.
 	  -backend-config="key=$JENKINS_TEAM_NAME.build.gds-reliability.engineering.tfstate"
 	```
 
-1. Run this command to apply the Terraform using your custom configuration
+1. Run these commands to apply the Terraform using your custom configuration
 
 	```
-	terraform apply -var-file=./terraform.tfvars
+	terraform plan -var-file=./terraform.tfvars -out terraform.plan
+	```
+
+	```
+	terraform apply "terraform.plan"
 	```
 
 1. You will get an output in your terminal that looks like this:
