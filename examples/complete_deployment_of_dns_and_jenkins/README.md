@@ -136,7 +136,7 @@ Before you start you'll need:
 	  -var environment=$JENKINS_ENV_NAME \
 	  -var github_client_id=$JENKINS_GITHUB_OAUTH_ID \
 	  -var github_client_secret=$JENKINS_GITHUB_OAUTH_SECRET \
-	  -out my-plan.txt
+	  -out terraform.plan
 	```
 
 	```
@@ -145,7 +145,7 @@ Before you start you'll need:
 	  -var environment=$JENKINS_ENV_NAME \
 	  -var github_client_id=$JENKINS_GITHUB_OAUTH_ID \
 	  -var github_client_secret=$JENKINS_GITHUB_OAUTH_SECRET \
-	  my-plan.txt
+	  terraform.plan
 	```
 
 ## Next Steps
