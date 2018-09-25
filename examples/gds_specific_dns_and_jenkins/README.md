@@ -28,7 +28,7 @@ Before you start you'll need:
 
 * an AWS user account with administrator access
 
-* [Terraform v0.11.7] installed on your laptop
+* [Terraform v0.11.8] installed on your laptop. This needs to be the same version as that in the [dns provider](https://github.com/alphagov/re-build-systems/blob/master/examples/gds_specific_dns_and_jenkins/dns/provider.tf) and [jenkins provider](https://github.com/alphagov/re-build-systems/blob/master/examples/gds_specific_dns_and_jenkins/jenkins/provider.tf) files
 
 * [AWS Command Line Interface (CLI)] installed on your laptop
 
