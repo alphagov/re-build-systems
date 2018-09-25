@@ -24,7 +24,7 @@ There are a few steps needed to load the new customised configuration:
 
 1. SSH into the master EC2 instance, stop the docker container and delete the content of the EFS volume (`rm -rf /mnt/jenkins-efs/*`)
 
-2. Run `terraform apply` as you would normally do to provision the infrastructure
+2. Run `terraform plan` and `terraform apply` as you would normally do to provision the infrastructure
 
 3. Terminate the running master EC2 instance (e.g. using the AWS console) - a new instance will be launched automatically with the updated launch configuration.
 
