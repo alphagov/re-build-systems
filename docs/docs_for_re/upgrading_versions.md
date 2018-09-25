@@ -20,6 +20,8 @@ You can find the current version of Terraform in the `main.tf` files in each of 
 
 If you need to upgrade the version, change the `required_version` entry in these `main.tf` files and test the change as described below.
 
+Please note also that you need to upgrade the version of Terraform on your laptop to be at least the same version as that in the [dns provider](https://github.com/alphagov/re-build-systems/blob/master/examples/gds_specific_dns_and_jenkins/dns/provider.tf) and [jenkins provider](https://github.com/alphagov/re-build-systems/blob/master/examples/gds_specific_dns_and_jenkins/jenkins/provider.tf) files.
+
 ## Upgrading Jenkins version
 
 Currently, the Jenkins version is specified in the [terraform-aws-re-build-jenkins](https://github.com/alphagov/terraform-aws-re-build-jenkins) module.
