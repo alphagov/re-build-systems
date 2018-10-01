@@ -22,13 +22,17 @@ After the changes you need to reprovision Jenkins, as explained in the next sect
 
 There are a few steps needed to load the new customised configuration:
 
-1. SSH into the master EC2 instance, stop the docker container and delete the content of the EFS volume (`rm -rf /mnt/jenkins-efs/*`)
+1. SSH into the master EC2 instance
 
-2. Run `terraform plan` and `terraform apply` as you would normally do to provision the infrastructure
+1. Stop the docker container by running `docker stop [container_id]`
 
-3. Terminate the running master EC2 instance (e.g. using the AWS console) - a new instance will be launched automatically with the updated launch configuration.
+1. Delete the content of the EFS volume (`rm -rf /mnt/jenkins-efs/*`) - this is because Jenkins will not run your updated configuration if it detects the configuration has already been set up. You should be able to backup your job history before you do that, if you need to restore it later.
 
-4. Restart Jenkins using the UI. This is so that the jobs in the `custom-script` will be registered.
+1. Run `terraform plan` and `terraform apply` as you would normally do to provision the infrastructure (if you use AssumeRole, run the few extra steps you follow during the first provisioning)
+
+1. Terminate the running master EC2 instance (e.g. using the AWS console) - a new instance will be launched automatically with the updated launch configuration.
+
+1. Restart Jenkins using the UI. This is so that the jobs in the `custom-script` will be registered.
 
 
 ## How to set up a job using Jenkinsfile
