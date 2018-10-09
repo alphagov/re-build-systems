@@ -7,6 +7,6 @@ At that point, RE will need to "enable" the team DNS
 
 ## Enable team DNS
 
-Documentation can be found [here](https://github.com/alphagov/re-build-systems-dns)
+Read the [re-build-systems-dns](https://github.com/alphagov/re-build-systems-dns) documentation on GitHub.
 
 
