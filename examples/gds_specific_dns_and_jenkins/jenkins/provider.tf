@@ -1,5 +1,5 @@
 terraform {
-  required_version = "= 0.11.7"
+  required_version = "~> 0.11.7"
 
   backend "s3" {
     encrypt = true
@@ -7,7 +7,7 @@ terraform {
 }
 
 provider "aws" {
-  version = "~> 1.11.0"
+  version = "~> 1.37.0"
   region  = "${var.aws_region}"
 
   # shared_credentials_file = "~/.aws/credentials"
