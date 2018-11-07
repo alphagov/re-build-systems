@@ -28,10 +28,10 @@ module "jenkins" {
   gitrepo        = "${var.gitrepo}"
   gitrepo_branch = "${var.gitrepo_branch}"
   # Github auth configuration
-  jenkins_admin_users_github_usernames   = ["${join(",", var.jenkins_admin_users_github_usernames)}"]
-  github_client_id     = "${var.github_client_id}"
-  github_client_secret = "${var.github_client_secret}"
-  github_organisations = ["${join(",", var.github_organisations)}"]
+  jenkins_admin_users_github_usernames = ["${join(",", var.jenkins_admin_users_github_usernames)}"]
+  github_client_id                     = "${var.github_client_id}"
+  github_client_secret                 = "${var.github_client_secret}"
+  github_organisations                 = ["${join(",", var.github_organisations)}"]
   # Public key
   ssh_public_key_file = "${var.ssh_public_key_file}"
   # DNS configuration
