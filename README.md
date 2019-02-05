@@ -1,3 +1,7 @@
+_This repository is no longer being maintained and no enhancements nor security patches will be made. The repository is part of the [GDS Reliability Engineering Build System](https://github.com/alphagov/re-build-systems) which has been deprecated._
+
+---
+
 # How to provision a Jenkins build system
 
 This repository provides examples for provisioning a Jenkins build system. The build is a containerised [Jenkins (version 2)] platform on Amazon Web Services (AWS), consisting of a master node and an agent node. Once provisioned, users log into the Jenkins build using their GitHub account.
@@ -8,7 +12,7 @@ Read the [architectural documentation] for more information about the build syst
 
 This [Jenkins (version 2)] build system has been created by publishing 2 [Terraform] modules, which means you can pick and choose how you use it.
 
-For ease, you can use either of these two examples (one for users within the Government Digital Service (GDS) and one for those outside of GDS) to provision a Jenkins build system. 
+For ease, you can use either of these two examples (one for users within the Government Digital Service (GDS) and one for those outside of GDS) to provision a Jenkins build system.
 
 Follow [this example](https://github.com/alphagov/re-build-systems/tree/master/examples/gds_specific_dns_and_jenkins) if you are from GDS, or [this one](https://github.com/alphagov/re-build-systems/tree/master/examples/complete_deployment_of_dns_and_jenkins) otherwise.
 
